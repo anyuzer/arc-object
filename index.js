@@ -93,6 +93,7 @@ class ArcObject extends Object {
         return _lastArg;
     }
 
+    //Implementation closer to array.map
     map(_f, _asArray){
         if(is(_f) !== 'function'){
             throw new TypeError('ArcObject.map first argument must be a valid function');
@@ -111,6 +112,24 @@ class ArcObject extends Object {
             }
         }
         return returnMap;
+    }
+
+    //Implementation closer array.filter
+    filter(_f){
+        if(is(_f) !== 'function'){
+            throw new TypeError('ArcObject.filter argument must be a valid function');
+        }
+
+        const $this = this;
+        const keys = Object.keys(this);
+        const returnObj = {};
+        for(let i=0;i<keys.length;i++) {
+            const key = keys[i];
+            if(_f.call($this,this[key],key)){
+                returnObj[key] = this[key];
+            }
+        }
+        return returnObj;
     }
 
     //Lazy
@@ -178,61 +197,6 @@ class ArcObject extends Object {
         if(firstKey !== undefined){
             return this[firstKey];
         }
-    }
-
-    //Remove values that evaluate to true through ArcCheck
-    filterVals(_Check){
-        if(is(_Check,true) !== 'ArcCheck'){
-            throw new TypeError('ArcObject.filterVals expects a valid ArcCheck object as an argument');
-        }
-        const $this = this;
-        const keys = $this.keys();
-        for(let i=0;i<keys.length;i++){
-            let key = keys[i];
-            if(_Check.val($this[key])){
-                delete $this[key];
-            }
-        }
-        return $this;
-    }
-
-    //Remove values that have keys that evaluate to true through ArcCheck
-    filterKeys(_Check){
-        if(is(_Check,true) !== 'ArcCheck'){
-            throw new TypeError('ArcObject.filterKeys expects a valid /Arc/Filter object as an argument');
-        }
-        const $this = this;
-        const keys = $this.keys();
-        keys.forEach(function(_key){
-            if(_Check.val(_key)){
-                delete $this[_key];
-            }
-        });
-        return $this;
-    }
-
-    //Remove values that have values that match a value of the filterArray
-    quickFilterVals(_filterArray){
-        if(is(_filterArray) !== 'array'){
-            throw new TypeError('ArcObject.quickFilterVals expects a valid array of values to check against');
-        }
-        const C = new Check();
-        C.addInclude(function(_val){
-            return (_filterArray.indexOf(_val) !== -1 ? true : false);
-        });
-        return this.filterVals(C);
-    }
-
-    //Remove values that have keys that match a value of the filterArray
-    quickFilterKeys(_filterArray){
-        if(is(_filterArray) !== 'array'){
-            throw new TypeError('ArcObject.quickFilterKeys expects a valid array of values to check against');
-        }
-        const C = new Check();
-        C.addInclude(function(_val){
-            return (_filterArray.indexOf(_val) !== -1 ? true : false);
-        });
-        return this.filterKeys(C);
     }
 
     constant(_key,_val,_enumerable){

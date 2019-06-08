@@ -4,7 +4,7 @@
   "description": "An object convenience subclass",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.js --coverage --coverage-report=html"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,6 @@
     "deepcopy": "^0.6.3"
   },
   "devDependencies": {
-    "tap": "^14.2.2"
+    "jest": "^24.8.0"
   }
 }
