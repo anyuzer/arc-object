@@ -27,6 +27,6 @@
     "deepcopy": "^0.6.3"
   },
   "devDependencies": {
-    "tap": "^5.7.2"
+    "tap": "^14.2.2"
   }
 }

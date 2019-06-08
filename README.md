@@ -19,6 +19,7 @@ $ npm install arc-object --save
     * shift()
     * pop()
     * reduce()
+    * map()
 * deepGet() to safely look for and return a value from a nested structure
 * native convenience binding (if desired)
 * freeze() and deepFreeze() (object freezing)
@@ -71,6 +72,28 @@ users.forEach(function(_v,_k){
     }
 });
 ```
+
+###.map(callback:Function,[,asArray:Boolean])
+Faux map for objects. Iterate over the values in the object, and return an array for each entry in the object (or a new object)
+
+By default, this returns a new array with a return value for each item in the object being iterated over
+
+```js
+//Example of map (default)
+const numbers = new ArcObject({'a': 1, 'b': 2, 'c': 3});
+const doubledValues = numbers.map((number) => number+number)
+//doubledValues contains [2,4,6]
+```
+
+If asArray is set to false, a **new** object will be created with the same keys as the object mapped, but new values
+
+```js
+//Example of map (default)
+const numbers = new ArcObject({a: 1, b: 2, c: 3});
+const doubledValues = numbers.map((number) => number+number, false)
+//doubledValues contains {a:2,b:4,c:6}
+```
+
 
 ### .reduce(callback:Function,returnArg:Mixed[,falseBreak:Boolean])
 Faux reduce for objects. Iterate over the object, and return a single value.

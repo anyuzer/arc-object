@@ -93,6 +93,26 @@ class ArcObject extends Object {
         return _lastArg;
     }
 
+    map(_f, _asArray){
+        if(is(_f) !== 'function'){
+            throw new TypeError('ArcObject.map first argument must be a valid function');
+        }
+
+        const $this = this;
+        const keys = Object.keys(this);
+        const returnMap = (_asArray === false ? {} : []);
+        for(let i=0;i<keys.length;i++) {
+            const key = keys[i];
+            const cbReturn = _f.call($this,this[key],key);
+            if(_asArray === false) {
+                returnMap[key] = cbReturn;
+            } else {
+                returnMap.push(cbReturn);
+            }
+        }
+        return returnMap;
+    }
+
     //Lazy
     count(){
         return Object.keys(this).length;
@@ -250,7 +270,7 @@ class ArcObject extends Object {
         }
         return lastObj;
     }
-    
+
     //When called binds the .arc() method to the global native object type, which in turn returns an ArcObject from a native object
     static bindNative(){
         Object.defineProperty(Object.prototype,'arc',{
