@@ -8,8 +8,6 @@ $ npm install arc-object --save
 
 ## Features
 * forEach() with break functionality
-* complex key/value filtering (using ArcCheck)
-* quick filtering
 * fauxrray like functions
     * ksort()
     * keys()
@@ -20,6 +18,7 @@ $ npm install arc-object --save
     * pop()
     * reduce()
     * map()
+    * filter()
 * deepGet() to safely look for and return a value from a nested structure
 * native convenience binding (if desired)
 * freeze() and deepFreeze() (object freezing)
@@ -182,16 +181,13 @@ alpha.z.x = 'aardvark'; //This will fail to set the a property
 ### .constant(key:Mixed,val:Mixed[,enumerable:Boolean])
 Alias of static ArcObject.defineConstant()
 
-### .quickFilterKeys(values:Array) / .quickFilterVals(values:Array)
-Remove indexes from object based on either matching keys, or matching values.
+### .filter(callback:Function)
+Remove indexes from object based on callback return of false
 ```js
-//Example of quickFilter
+//Example of filter
 var alpha = new ArcObject({a:true,b:false,z:undefined});
-alpha.quickFilterVals([false,undefined]); //Object is reduced to {a:'a'}
+alpha.filter(val => !!val); //Object is reduced to {a:true}
 ```
-
-### .filterKeys(filter:ArcCheck) / .filterVals(filter:ArcCheck)
-Use an ArcCheck object to perform complex evaluation on a key or value to decide whether or not it should be removed from the object (see ArcCheck for more details on use).
 
 ### ArcObject.deepGet(...args)
 This is method that can be used to safely fetch a nested key path inside of an object. Returns the value found, or undefined
