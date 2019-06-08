@@ -33,7 +33,7 @@ var ArcObject = require('arc-object');
 var alpha = new ArcObject({z:'z',x:false,y:'aardvark',a:'a',b:undefined,c:'c'});
 
 //Filter out false/undefined vals
-alpha.quickFilterVals([false,undefined]);
+alpha.filter(val => !!val);
 
 //Key sort. Now internally ordered as {a:'a',c:'c',y:'aardvark',z:'z'}
 alpha.ksort();
