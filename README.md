@@ -1,4 +1,4 @@
-# arc-object [![Build Status](https://travis-ci.org/anyuzer/arc-object.svg?branch=master)](https://travis-ci.org/anyuzer/arc-object)
+# arc-object
 An object convenience subclass for javascript (ES6)
 
 ## Install
