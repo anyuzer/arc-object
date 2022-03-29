@@ -24,7 +24,7 @@
     "arc-array": "4.3.1",
     "arc-check": "1.2.1",
     "arc-is": "1.0.8",
-    "deepcopy": "^1.0.1"
+    "deepcopy": "^2.1.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"
