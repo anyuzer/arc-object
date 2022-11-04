@@ -1,4 +1,4 @@
-const ArcObject = require('../');
+import ArcObject from "../index.js";
 
 describe('ArcObject.filter',() => {
     let testObj = new ArcObject({and:'aardvark',aa:'bb',bb:'cc',z:'a',id:false,id2:undefined});

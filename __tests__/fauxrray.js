@@ -1,4 +1,4 @@
-const ArcObject = require('../');
+import ArcObject from "../index.js";
 
 //Everybody knows objects shouldn't be used as map/array bastardizations.. but we do sometimes anyway
 describe('ArcObject.fauxrray',() => {

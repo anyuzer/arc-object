@@ -1,4 +1,4 @@
-var ArcObject = require('../');
+import ArcObject from "../index.js";
 
 //Test freeze methods
 describe('ArcObject.freeze',() => {
@@ -7,11 +7,9 @@ describe('ArcObject.freeze',() => {
     //Freeze it
     testObj.freeze();
 
-
     it('should not be able to set a new value', () => {
         //Attempt overwrite
-        testObj.a = 'test';
-        expect(testObj.a).toEqual('a');
+        expect(() => {testObj.a = 'test'}).toThrow();
     });
 
     //Freeze even nested objects
@@ -19,8 +17,6 @@ describe('ArcObject.freeze',() => {
     testObj.deepFreeze();
 
     it('should not be able to set a new value, even on a nested object', () => {
-        //Attempt overwrite
-        testObj.b.x = 'yes';
-        expect(testObj.b.x).toEqual('x');
+        expect(() => {testObj.b.x = 'yes';}).toThrow();
     });
 });

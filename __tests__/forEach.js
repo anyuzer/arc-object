@@ -1,4 +1,4 @@
-var ArcObject = require('../');
+import ArcObject from "../index.js";
 
 describe('ArcObject.forEach',() => {
     let testObj = new ArcObject({a:1,b:2,c:3});

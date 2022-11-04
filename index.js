@@ -1,8 +1,6 @@
-"use strict";
-var is = require('arc-is');
-var Check = require('arc-check');
-var ArcArray = require('arc-array');
-const deepcopy = require('deepcopy');
+import is from 'arc-is';
+import ArcArray from "arc-array";
+import deepcopy from "deepcopy";
 
 class ArcObject extends Object {
     //Allow for an Object literal argument to be passed in that gets case to the ArcObject
@@ -279,4 +277,4 @@ class ArcObject extends Object {
     }
 }
 
-module.exports = ArcObject;
+export default ArcObject;

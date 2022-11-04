@@ -1,4 +1,4 @@
-const ArcObject = require('../');
+import ArcObject from "../index.js";
 
 describe('ArcObject copy', () => {
     it('should return a copy of an object', () => {

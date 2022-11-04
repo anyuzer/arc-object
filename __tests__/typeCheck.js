@@ -1,5 +1,5 @@
-const is = require('arc-is');
-const ArcObject = require('../');
+import is from 'arc-is';
+import ArcObject from "../index.js";
 
 //Test native casting, toString and wrapping
 describe('ArcObject typeCheck',() => {

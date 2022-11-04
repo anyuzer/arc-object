@@ -1,4 +1,4 @@
-var ArcObject = require('../');
+import ArcObject from "../index.js";
 
 //Test some lazy shortcut methods
 describe('ArcObject.lazyMethods',() => {

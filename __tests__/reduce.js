@@ -1,4 +1,4 @@
-const ArcObject = require('../');
+import ArcObject from "../index.js";
 
 describe('ArcObject.reduce',() => {
     let testObject = new ArcObject({a:'a',b:'b',c:'c',d:'d'});

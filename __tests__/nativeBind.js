@@ -1,5 +1,5 @@
-const is = require('arc-is');
-const ArcObject = require('../');
+import is from "arc-is";
+import ArcObject from "../index.js";
 
 //Bind ArcObject to the native object
 ArcObject.bindNative();
