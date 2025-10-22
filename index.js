@@ -233,23 +233,6 @@ class ArcObject extends Object {
         return lastObj;
     }
 
-    //When called binds the .arc() method to the global native object type, which in turn returns an ArcObject from a native object
-    static bindNative(){
-        Object.defineProperty(Object.prototype,'arc',{
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: function(){
-                let $this = this;
-                if(is($this,true) === 'ArcObject'){
-                    return $this;
-                }
-                $this = new ArcObject($this);
-                return $this;
-            }
-        });
-    }
-
     //Safely return an ArcObject or cast a native object as an ArcObject
     static wrap(_obj){
         if(is(_obj,true) === 'ArcObject'){
