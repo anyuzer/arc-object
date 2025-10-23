@@ -1,10 +1,10 @@
 import ArcArray from 'arc-array';
 
-declare class ArcObject extends Object {
+declare class ArcObject<T extends object = Record<string, any>> extends Object {
     /**
      * Construct from a plain object; assigns own enumerable props to `this`.
      */
-    constructor(_obj?: object);
+    constructor(_obj?: T);
 
     /**
      * Deep-freeze the object; nested plain objects are wrapped as ArcObject and frozen.
@@ -20,7 +20,12 @@ declare class ArcObject extends Object {
      * Iterate own enumerable properties. If the callback returns false, iteration breaks.
      */
     forEach(
-        _f: (this: any, value: any, key: string, self: this) => boolean | void,
+        _f: (
+            this: this,
+            value: T[keyof T],
+            key: Extract<keyof T, string>,
+            self: this
+        ) => boolean | void,
         _thisArg?: any
     ): void;
 
@@ -28,26 +33,37 @@ declare class ArcObject extends Object {
      * Reduce over own enumerable properties, calling fn(acc, value, key).
      * If fn returns false and _falseBreak !== false, iteration stops.
      */
-    reduce<T>(
-        _f: (this: this, last: T, value: any, key: string) => T | false,
-        _lastArg: T,
+    reduce<R>(
+        _f: (
+            this: this,
+            last: R,
+            value: T[keyof T],
+            key: Extract<keyof T, string>
+        ) => R | false,
+        _lastArg: R,
         _falseBreak?: boolean
-    ): T;
+    ): R;
 
     /**
      * Map over own enumerable properties.
-     * - When _asArray === false, returns an object keyed by the same keys.
+     * - When _asArray === false, returns an object keyed by strings.
      * - Otherwise (default), returns an array of mapped values.
      */
-    map<T>(_f: (this: this, value: any, key: string) => T, _asArray: false): Record<string, T>;
-    map<T>(_f: (this: this, value: any, key: string) => T, _asArray?: true): T[];
+    map<R>(
+        _f: (this: this, value: T[keyof T], key: Extract<keyof T, string>) => R,
+        _asArray: false
+    ): Record<string, R>;
+    map<R>(
+        _f: (this: this, value: T[keyof T], key: Extract<keyof T, string>) => R,
+        _asArray?: true
+    ): R[];
 
     /**
      * Filter own enumerable properties by predicate; returns a new plain object of passing entries.
      */
     filter(
-        _f: (this: this, value: any, key: string) => boolean
-    ): Record<string, any>;
+        _f: (this: this, value: T[keyof T], key: Extract<keyof T, string>) => boolean
+    ): Record<string, T[keyof T]>;
 
     /**
      * Count of own enumerable properties.
@@ -57,38 +73,37 @@ declare class ArcObject extends Object {
     /**
      * Own keys as an ArcArray (extends Array).
      */
-    keys(): ArcArray<string>;
+    keys(): ArcArray<Extract<keyof T, string>>;
 
     /**
-     * Sort keys lexicographically (mutates object order in JS engines that reflect insertion order)
-     * and reinsert properties accordingly. Returns this.
+     * Sort keys lexicographically and reinsert properties accordingly. Returns this.
      */
     ksort(): this;
 
     /**
      * Remove and return the last property's value, or undefined.
      */
-    pop(): any | undefined;
+    pop(): T[keyof T] | undefined;
 
     /**
      * Peek the last property's value, or undefined.
      */
-    last(): any | undefined;
+    last(): T[keyof T] | undefined;
 
     /**
      * Remove and return the first property's value, or undefined.
      */
-    shift(): any | undefined;
+    shift(): T[keyof T] | undefined;
 
     /**
      * Peek the first property's value, or undefined.
      */
-    first(): any | undefined;
+    first(): T[keyof T] | undefined;
 
     /**
      * Define a non-writable, non-configurable property on this (enumerable defaults to true).
      */
-    constant(_key: string, _val: any, _enumerable?: boolean): void;
+    constant(_key: string, _val: unknown, _enumerable?: boolean): void;
 
     /**
      * "[object ArcObject]"
@@ -98,17 +113,17 @@ declare class ArcObject extends Object {
     /**
      * Duck-type check: returns true when _duck has functions on the same keys where _primary has functions.
      */
-    static duckType(_primary: any, _duck: any): boolean;
+    static duckType(_primary: unknown, _duck: unknown): boolean;
 
     /**
      * Safe deep getter: returns undefined if any path segment is missing.
      */
-    deepGet(...path: Array<string | number>): any;
+    deepGet(...path: Array<string | number>): unknown;
 
     /**
      * Return an ArcObject: pass through if already ArcObject; wrap a plain object; otherwise throw.
      */
-    static wrap(_obj: ArcObject | object): ArcObject;
+    static wrap<U extends object>(_obj: ArcObject<U> | U): ArcObject<U>;
 
     /**
      * Define a constant (non-writable, non-configurable) property on any object.
@@ -116,14 +131,14 @@ declare class ArcObject extends Object {
     static defineConstant(
         _obj: object,
         _key: string,
-        _val: any,
+        _val: unknown,
         _enumerable?: boolean
     ): void;
 
     /**
      * Deep copy the given value.
      */
-    static copy<T>(_obj: T): T;
+    static copy<S>(_obj: S): S;
 }
 
 export default ArcObject;
